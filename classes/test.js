@@ -1,6 +1,6 @@
 class Test {
     static hello(){
-        return "helazeazelo";
+        return "heroku ok";
     }
 }
 
