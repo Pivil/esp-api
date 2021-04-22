@@ -34,39 +34,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var express = require('express');
-var app = express();
-var esTools = require('../controllers/ESTools');
-var bodyParser = require('body-parser');
-var mongoTool = require('../controllers/MongoTool');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.get('/', function (req, res) {
-    return __awaiter(this, void 0, void 0, function () {
-        var result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, mongoTool.get()];
-                case 1:
-                    result = _a.sent();
-                    console.log('ici', result);
-                    res.send({ res: result });
-                    return [2 /*return*/];
-            }
-        });
+var _this = this;
+var MongoClient = require('mongodb').MongoClient;
+var uri = "mongodb+srv://root:zTRTbG7d@cluster0.ngib3.mongodb.net/database";
+var add = function () { return __awaiter(_this, void 0, void 0, function () {
+    var client, db, collection, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+                return [4 /*yield*/, client.connect()];
+            case 1:
+                _a.sent();
+                db = client.db('database');
+                collection = db.collection('test');
+                return [4 /*yield*/, collection.insertOne({
+                        "name": "insert from node",
+                        "truc": {
+                            "array": [
+                                "a",
+                                "b",
+                                "c"
+                            ]
+                        }
+                    })];
+            case 2:
+                result = _a.sent();
+                console.log("Added ID: " + result.insertedId);
+                client.close();
+                return [2 /*return*/];
+        }
     });
-});
-// app.get('/jobIdByName/:jobName', async function (req: any, res: any) {
-//   var es = new esTools();
-//   res.send({res: await es.findJobIdByName(req.params.jobName)});
-// })
-// app.get('/:index', async function (req: any, res: any) {
-//     var result = await esTools.findAll(req.params.index);
-//     res.send({result: result});
-// })
-// app.post('/job', async function (req: any, res: any) {
-//     var es = new esTools();
-//     var data = req.body;
-//     await es.addJob(data);
-// })
-app.listen(3000);
+}); };
+var get = function () { return __awaiter(_this, void 0, void 0, function () {
+    var client, db, collection, cursor, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+                return [4 /*yield*/, client.connect()];
+            case 1:
+                _a.sent();
+                db = client.db('database');
+                collection = db.collection('test');
+                return [4 /*yield*/, collection.find({})];
+            case 2:
+                cursor = _a.sent();
+                return [4 /*yield*/, cursor.toArray()];
+            case 3:
+                result = _a.sent();
+                client.close();
+                return [2 /*return*/, result];
+        }
+    });
+}); };
+module.exports = {
+    add: add,
+    get: get
+};
