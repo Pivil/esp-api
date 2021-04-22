@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 var MongoClient = require('mongodb').MongoClient;
-var uri = "mongodb+srv://root:zTRTbG7d@cluster0.ngib3.mongodb.net/database";
+var uri = "mongodb+srv://test:aZeRtY123@cluster0.ngib3.mongodb.net/database";
 var add = function () { return __awaiter(_this, void 0, void 0, function () {
     var client, db, collection, result;
     return __generator(this, function (_a) {
